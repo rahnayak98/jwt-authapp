@@ -1,0 +1,77 @@
+<%- include('partials/header'); -%>
+
+<form>
+    <h2>
+        Login
+    </h2>
+    <label for="email">Email</label>
+    <input type="text" name="email" required/>
+    <div class="email error"> </div>
+
+
+
+
+    <label for="password">Password </label>
+    <input type="password" name="password" required/>
+    <div class="password error"> </div> 
+
+    <button> Login</button>
+</form>
+
+<script>
+    const form=document.querySelector('form');
+
+   
+
+
+       form.addEventListener('submit',async (e)=>
+    {
+    e.preventDefault();
+
+    const email=form.email.value;
+    const password=form.password.value;
+        // console.log(email,password);
+        try {
+            const res=await fetch('/login',{
+                method:'POST',
+                body:JSON.stringify({email:email,password:password}),
+                headers:{'Content-Type':'application/json'}});
+
+                if (!res.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  const data = await res.json();
+  console.log('Data received:', data);
+
+  // Redirect here after successful login
+  location.assign('/');
+//             }).then(response => {
+//   if (!response.ok) {
+//     throw new Error('Network response was not ok');
+//   }
+//   return response.json();
+// })
+// .then(data => {
+//     location.assign('/')
+//   console.log('Data received:', data);
+// })
+// .catch(error => {
+//   console.error('Error:', error);
+// });
+            // const data=res.json();
+            // console.log(data);
+            // if(data.user)
+            // {
+            //     location.assign('/')
+            // }
+
+            
+        } catch (error) {
+            
+        }
+
+       }   );
+
+</script>
+<%- include('partials/footer'); -%>
